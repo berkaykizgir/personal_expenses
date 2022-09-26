@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_expenses/transaction.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,18 +9,83 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Personal Expenses',
-      theme: ThemeData.dark(useMaterial3: true),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: SizedBox(
-            width: double.infinity,
-            child: Text('Hello World'),
+        title: 'Personal Expenses',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.light(useMaterial3: true),
+        home: MyHomePage());
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  MyHomePage({Key? key}) : super(key: key);
+  final List<Transaction> transactions = [
+    Transaction(
+        id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
+    Transaction(
+        id: 't2',
+        title: 'Weekly Groceries',
+        amount: 25.99,
+        date: DateTime.now())
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter App'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Card(
+            color: Colors.blue,
+            elevation: 5,
+            child:
+                Container(width: double.infinity, child: const Text('CHART!')),
           ),
-        ),
+          Column(
+            children: transactions.map((transaction) {
+              return Card(
+                elevation: 10,
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 15,
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: Colors.purple)),
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        transaction.amount.toString(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.purple),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(transaction.title,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Text(
+                          transaction.date.toString(),
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          )
+        ],
       ),
     );
   }
