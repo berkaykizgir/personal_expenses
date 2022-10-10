@@ -14,7 +14,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Personal Expenses',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(useMaterial3: true),
+      theme: ThemeData(
+          useMaterial3: true,
+          primarySwatch: Colors.purple,
+          fontFamily: 'Quicksand',
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+          appBarTheme: AppBarTheme(titleTextStyle: TextStyle(fontFamily: 'OpenSans', color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold))),
       home: const MyHomePage(),
     );
   }
@@ -29,8 +40,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Weekly Groceries', amount: 25.99, date: DateTime.now())
+    /*   Transaction(id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
+    Transaction(id: 't2', title: 'Weekly Groceries', amount: 25.99, date: DateTime.now()) */
   ];
 
   void _addNewTransaction(String txTitle, double txAmount) {
@@ -53,13 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter App'),
+        title: const Text(
+          'Personal Expenses',
+        ),
         actions: [
           IconButton(
               onPressed: () {
                 _startAddNewTransaction(context);
               },
-              icon: Icon(Icons.add))
+              icon: const Icon(Icons.add))
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -67,13 +80,13 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           _startAddNewTransaction(context);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Card(
+            const Card(
               color: Colors.blue,
               elevation: 5,
               child: SizedBox(width: double.infinity, child: Text('CHART!')),
